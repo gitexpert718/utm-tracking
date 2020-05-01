@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>UTM Tracking</title>
+	</head>
+	<body>
+		<a href="http://offer.thehothit.com/one-common-veggie">Test</a>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+		<script>
+			jQuery(document).ready(function($){
+				  URLModifier('tid'); // replace VTID to any key
+				//   console.log("here")
+			});
+			function URLModifier(customKey)
+			{				
+				var SearchKeyWord = 'utm_campaign'; // replace utm_campaign to any key you want to search for				
+				var searchKeyWordUrl = getParamFromURL(SearchKeyWord);
+				if(searchKeyWordUrl)
+				{
+				  $('a').each(function() {
+						var currentLinkUrl = $(this).attr('href');
+						if(typeof currentLinkUrl !== "undefined") //Anchor Links
+						{  
+						   	var modifiedUrl = currentLinkUrl+(currentLinkUrl.match(/\?/) ? '&' : '?') + customKey + '=' + searchKeyWordUrl;
+							$(this).attr('href', modifiedUrl);
+							console.log("modifiedUrl= " + modifiedUrl);
+						}
+						else // Image Links
+						{
+					  		var currentImgLinkUrl = $(this).attr('data-imagelink');
+						  	var modifiedImgUrl = currentImgLinkUrl+(currentImgLinkUrl.match(/\?/) ? '&' : '?') + customKey + '=' + searchKeyWordUrl; 
+							$(this).attr('data-image-link', modifiedImgUrl);
+							console.log("modifiedImgUrl= " + modifiedImgUrl);
+						}
+					 });
+				} 
+			}
+			function getParamFromURL(t)
+			{
+				let a = new RegExp("[?&]"+t+"=([^&#]*)").exec("http://offer.thehothit.com/one-common-veggie?utm_campaign=adset1.ad2");
+				// var a=new RegExp("[?&]"+t+"=([^&#]*)").exec(window.location.href);
+				// console.log(a);
+				return null===a?null:a[1]
+			}
+		</script>
+	</body>	
+</html>
